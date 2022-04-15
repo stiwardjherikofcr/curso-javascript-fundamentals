@@ -72,7 +72,13 @@ form_contact.addEventListener('submit', (e) => {
         sendMail(inputs[0].value, inputs[1].value, inputs[2].value, select, textarea.value);
         form_contact.reset();
     } else {
-        alert('Por favor, complete todos los campos.');
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Por favor, complete todos los campos.',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
 });
 
@@ -93,6 +99,24 @@ function sendMail(name, email, phone, select, comment) {
             })
         })
         .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
+        .then(data => {
+            console.log(data);
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Mensaje enviado con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
+        .catch(error => {
+            console.error('Error:', error)
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Error al enviar el mensaje',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
 }
